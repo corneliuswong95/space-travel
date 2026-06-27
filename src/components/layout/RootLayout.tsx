@@ -26,7 +26,7 @@ export function RootLayout() {
             Open APIs is layered on top when it's reachable.
           </p>
           <p className={styles.footNote}>Planet textures by Solar System Scope (CC BY 4.0).</p>
-          <p className={`mono ${styles.footBy}`}>Built by Cornelius Wong</p>
+          <p className={`mono ${styles.footBy}`}>By Cornelius Wong</p>
         </div>
       </footer>
     </div>
