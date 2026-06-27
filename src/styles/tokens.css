@@ -1,0 +1,126 @@
+/*
+ * Design tokens. The whole site derives from these.
+ * Direction: "precise scientific instrument meets beautiful old star chart."
+ * Never hard-code a palette hex in a component — reference these variables.
+ */
+
+:root {
+  /* --- Core palette (the only raw hex in the codebase) --- */
+  --ink: #0b1026; /* deep indigo-navy base, not pure black */
+  --ink-2: #161b3d; /* raised surfaces / cards on the dark base */
+  --paper: #f3ecdd; /* warm parchment for reading-heavy panels */
+  --amber: #e8a33d; /* primary accent: starlight / brass / sodium lamp */
+  --rust: #b0552f; /* secondary accent for emphasis + data highlights */
+  --slate: #8a93b8; /* muted text and hairline rules on dark */
+
+  /* Derived ink shades */
+  --ink-3: #0a0e20; /* deepest wells / insets */
+  --paper-2: #e7ddc7; /* slightly darker parchment for cards on paper */
+  --paper-ink: #20243f; /* body text color when on a paper surface */
+
+  /* --- Semantic colors: dark context (the default chrome) --- */
+  --bg: var(--ink);
+  --surface: var(--ink-2);
+  --surface-inset: var(--ink-3);
+  --text: #ece7d8; /* near-parchment; AA+ on ink */
+  --text-muted: var(--slate);
+  --accent: var(--amber);
+  --accent-2: var(--rust);
+  --hairline: color-mix(in srgb, var(--slate) 26%, transparent);
+  --hairline-strong: color-mix(in srgb, var(--slate) 45%, transparent);
+  --grid-line: color-mix(in srgb, var(--slate) 6%, transparent);
+
+  /* Amber/rust on dark, tuned for fills + faint washes */
+  --accent-wash: color-mix(in srgb, var(--amber) 12%, transparent);
+  --accent-2-wash: color-mix(in srgb, var(--rust) 14%, transparent);
+
+  /* State colors (functional, not decorative): correct = sage, wrong reuses rust */
+  --ok: #5fb37a;
+  --ok-wash: color-mix(in srgb, #5fb37a 12%, transparent);
+
+  /* --- Type families (three roles) --- */
+  --font-display: 'Fraunces Variable', 'Fraunces', Georgia, 'Times New Roman', serif;
+  --font-body: 'Inter Variable', 'Inter', system-ui, -apple-system, sans-serif;
+  --font-mono: 'IBM Plex Mono', ui-monospace, 'SFMono-Regular', 'Menlo', monospace;
+
+  /* --- Fluid type scale (min .. max) --- */
+  --text-xs: clamp(0.72rem, 0.69rem + 0.12vw, 0.78rem);
+  --text-sm: clamp(0.82rem, 0.79rem + 0.16vw, 0.9rem);
+  --text-base: clamp(1rem, 0.97rem + 0.18vw, 1.08rem);
+  --text-lg: clamp(1.16rem, 1.1rem + 0.32vw, 1.34rem);
+  --text-xl: clamp(1.4rem, 1.28rem + 0.6vw, 1.75rem);
+  --text-2xl: clamp(1.75rem, 1.5rem + 1.1vw, 2.4rem);
+  --text-3xl: clamp(2.2rem, 1.8rem + 2vw, 3.4rem);
+  --text-display: clamp(2.6rem, 1.9rem + 3.4vw, 4.6rem);
+
+  /* --- Spacing scale --- */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.5rem;
+  --space-6: 2rem;
+  --space-7: 3rem;
+  --space-8: 4rem;
+  --space-9: 6rem;
+  --space-10: 8rem;
+
+  /* --- Radii (restrained; instrument, not bubble) --- */
+  --radius-sm: 3px;
+  --radius: 6px;
+  --radius-lg: 10px;
+  --radius-pill: 999px;
+
+  /* --- Layout --- */
+  --measure: 66ch; /* reading width */
+  --container: 75rem; /* max content width */
+  --container-narrow: 46rem;
+
+  /* --- Elevation (subtle on dark) --- */
+  --shadow-1: 0 1px 2px rgb(0 0 0 / 0.3);
+  --shadow-2: 0 8px 24px -8px rgb(0 0 0 / 0.5);
+  --shadow-glow: 0 0 0 1px var(--hairline), 0 12px 40px -16px rgb(0 0 0 / 0.65);
+
+  /* --- Motion (consistent eases site-wide) --- */
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --dur-fast: 140ms;
+  --dur: 280ms;
+  --dur-slow: 620ms;
+
+  /* --- Focus ring --- */
+  --focus-ring: 0 0 0 2px var(--bg), 0 0 0 4px var(--amber);
+
+  color-scheme: dark;
+}
+
+/*
+ * Paper context. Apply to reading panels / lesson prose so text flips to ink-on-parchment
+ * and the accent switches to rust (amber fails AA on parchment).
+ */
+/* Re-assert the dark context for a dark island nested inside a paper surface. */
+.surface-ink {
+  --bg: var(--ink);
+  --surface: var(--ink-2);
+  --surface-inset: var(--ink-3);
+  --text: #ece7d8;
+  --text-muted: var(--slate);
+  --accent: var(--amber);
+  --accent-2: var(--rust);
+  --hairline: color-mix(in srgb, var(--slate) 26%, transparent);
+  --hairline-strong: color-mix(in srgb, var(--slate) 45%, transparent);
+  color-scheme: dark;
+}
+
+.surface-paper {
+  --bg: var(--paper);
+  --surface: var(--paper-2);
+  --surface-inset: #efe6d2;
+  --text: var(--paper-ink);
+  --text-muted: #5b5640;
+  --accent: var(--rust);
+  --accent-2: var(--rust);
+  --hairline: color-mix(in srgb, var(--paper-ink) 18%, transparent);
+  --hairline-strong: color-mix(in srgb, var(--paper-ink) 32%, transparent);
+  color-scheme: light;
+}

@@ -1,0 +1,101 @@
+.plate {
+  position: relative;
+}
+
+.catalogRow {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-4);
+}
+
+.catalog {
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  text-transform: uppercase;
+  letter-spacing: 0.22em;
+  color: var(--accent);
+}
+
+.meta {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  letter-spacing: 0.1em;
+  color: var(--text-muted);
+  text-align: right;
+}
+
+/* Hairline rule with a measurement tick at its origin. */
+.rule {
+  position: relative;
+  height: 1px;
+  margin-block: var(--space-3) var(--space-4);
+  background: var(--hairline-strong);
+}
+.rule::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: -4px;
+  width: 2px;
+  height: 9px;
+  background: var(--accent);
+}
+
+.title {
+  margin: 0;
+}
+
+.subtitle {
+  margin-top: var(--space-3);
+  max-width: var(--measure);
+  color: var(--text-muted);
+  font-size: var(--text-base);
+}
+
+/* Hero scale */
+.hero .title {
+  font-size: var(--text-display);
+}
+.hero .subtitle {
+  font-size: var(--text-lg);
+}
+
+/* Telemetry grid */
+.readouts {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(8.5rem, 1fr));
+  margin: var(--space-5) 0 0;
+  border-top: 1px solid var(--hairline);
+}
+
+.cell {
+  padding: var(--space-3) var(--space-4);
+  border-left: 1px solid var(--hairline);
+}
+.cell:first-child {
+  padding-left: 0;
+  border-left: none;
+}
+
+.cellLabel {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--text-muted);
+}
+
+.cellValue {
+  margin: var(--space-1) 0 0;
+  font-family: var(--font-mono);
+  font-size: var(--text-lg);
+  line-height: 1.1;
+  color: var(--text);
+  font-feature-settings: 'tnum' 1;
+}
+
+.unit {
+  font-size: var(--text-sm);
+  color: var(--text-muted);
+}

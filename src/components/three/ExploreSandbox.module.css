@@ -1,0 +1,183 @@
+.sandbox {
+  width: 100%;
+  overflow: hidden;
+  border: 1px solid var(--hairline-strong);
+  border-radius: var(--radius-lg);
+}
+
+.stage {
+  position: relative;
+  height: clamp(380px, 64vh, 620px);
+  background: radial-gradient(ellipse 80% 70% at 35% 45%, var(--ink-2), var(--ink) 72%);
+}
+
+.canvasWrap {
+  position: absolute;
+  inset: 0;
+}
+
+/* Floating instrument card with the focused body's facts. */
+.info {
+  position: absolute;
+  top: var(--space-5);
+  left: var(--space-5);
+  width: min(22rem, 72%);
+  padding: var(--space-4) var(--space-5);
+  background: color-mix(in srgb, var(--ink) 58%, transparent);
+  border: 1px solid var(--hairline);
+  border-radius: var(--radius);
+  backdrop-filter: blur(8px);
+  pointer-events: none;
+}
+
+.infoKicker {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--accent);
+}
+
+.infoName {
+  margin-top: var(--space-1);
+  font-size: var(--text-2xl);
+}
+
+.infoBlurb {
+  margin-top: var(--space-2);
+  color: var(--text-muted);
+  font-size: var(--text-sm);
+  line-height: 1.55;
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  line-clamp: 4;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.readouts {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: var(--space-3);
+  margin: var(--space-4) 0 0;
+}
+
+.cell dt {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--text-muted);
+}
+
+.cell dd {
+  margin: 2px 0 0;
+  font-family: var(--font-mono);
+  font-size: var(--text-base);
+  color: var(--text);
+  font-feature-settings: 'tnum' 1;
+}
+
+.unit {
+  font-size: var(--text-xs);
+  color: var(--text-muted);
+}
+
+.infoLink {
+  display: inline-block;
+  margin-top: var(--space-3);
+  pointer-events: auto;
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  color: var(--accent);
+}
+.infoLink:hover {
+  text-decoration: underline;
+}
+
+.hint {
+  position: absolute;
+  bottom: var(--space-4);
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  letter-spacing: 0.12em;
+  color: var(--text-muted);
+  pointer-events: none;
+}
+
+/* --- Body picker rail --- */
+.rail {
+  display: flex;
+  gap: var(--space-2);
+  padding: var(--space-3) var(--space-4);
+  overflow-x: auto;
+  border-top: 1px solid var(--hairline);
+  background: var(--surface);
+}
+
+.chip {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  flex: none;
+  min-width: 4.5rem;
+  padding: var(--space-2) var(--space-3);
+  background: transparent;
+  color: var(--text-muted);
+  border: 1px solid var(--hairline);
+  border-radius: var(--radius);
+  cursor: pointer;
+  transition:
+    color var(--dur-fast) var(--ease-out),
+    border-color var(--dur-fast) var(--ease-out),
+    background var(--dur-fast) var(--ease-out);
+}
+
+.chip:hover {
+  color: var(--text);
+  border-color: var(--hairline-strong);
+}
+
+.chipActive,
+.chipActive:hover {
+  color: var(--text);
+  border-color: var(--accent);
+  background: var(--accent-wash);
+}
+
+.chipSymbol {
+  font-size: var(--text-lg);
+  line-height: 1;
+  color: var(--accent);
+}
+
+.chipName {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  letter-spacing: 0.04em;
+}
+
+@media (max-width: 640px) {
+  .info {
+    top: auto;
+    bottom: var(--space-4);
+    left: var(--space-4);
+    right: var(--space-4);
+    width: auto;
+  }
+  .infoBlurb {
+    display: none;
+  }
+  .readouts {
+    grid-template-columns: repeat(3, auto);
+    justify-content: start;
+    gap: var(--space-4);
+    margin-top: var(--space-3);
+  }
+  .hint {
+    display: none;
+  }
+}

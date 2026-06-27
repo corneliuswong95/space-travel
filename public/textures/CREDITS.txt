@@ -1,0 +1,6 @@
+Planet, Sun, and Saturn-ring texture maps in this folder are by Solar System Scope
+(https://www.solarsystemscope.com/textures), licensed CC BY 4.0
+(https://creativecommons.org/licenses/by/4.0/).
+
+2K equirectangular maps, downloaded for offline use. If you redistribute the app,
+keep this attribution.

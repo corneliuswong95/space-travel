@@ -1,0 +1,113 @@
+/* --- Term: inline definition --- */
+.term {
+  position: relative;
+  border-bottom: 1px dashed var(--accent);
+  cursor: help;
+  font-weight: 500;
+}
+
+.termPop {
+  position: absolute;
+  left: 0;
+  bottom: calc(100% + 8px);
+  z-index: 10;
+  width: max-content;
+  max-width: 20rem;
+  padding: var(--space-3) var(--space-4);
+  background: var(--ink-2);
+  color: var(--paper);
+  border: 1px solid color-mix(in srgb, #8a93b8 40%, transparent);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-2);
+  font-family: var(--font-body);
+  font-size: var(--text-sm);
+  font-weight: 400;
+  line-height: 1.45;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(4px);
+  transition:
+    opacity var(--dur-fast) var(--ease-out),
+    transform var(--dur-fast) var(--ease-out),
+    visibility var(--dur-fast);
+  pointer-events: none;
+}
+
+.term:hover .termPop,
+.term:focus .termPop,
+.term:focus-within .termPop {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+/* --- Readout --- */
+.readout {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  width: fit-content;
+  margin: var(--space-5) 0;
+  padding: var(--space-4) var(--space-5);
+  background: var(--surface-inset);
+  border: 1px solid var(--hairline);
+  border-left: 3px solid var(--accent);
+  border-radius: var(--radius);
+}
+
+.readoutLabel {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  color: var(--text-muted);
+}
+
+.readoutValue {
+  font-family: var(--font-mono);
+  font-size: var(--text-2xl);
+  line-height: 1;
+  color: var(--text);
+  font-feature-settings: 'tnum' 1;
+}
+
+.readoutUnit {
+  font-size: var(--text-lg);
+  color: var(--text-muted);
+}
+
+/* --- Key idea callout --- */
+.keyIdea {
+  margin: var(--space-6) 0;
+  padding: var(--space-5);
+  background: color-mix(in srgb, var(--accent) 8%, transparent);
+  border: 1px solid color-mix(in srgb, var(--accent) 30%, transparent);
+  border-radius: var(--radius-lg);
+}
+
+.keyIdeaTag {
+  display: block;
+  margin-bottom: var(--space-2);
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  color: var(--accent);
+}
+
+.keyIdeaBody > :last-child {
+  margin-bottom: 0;
+}
+
+/* --- Field note --- */
+.note {
+  margin: var(--space-5) 0;
+  padding-left: var(--space-4);
+  border-left: 2px solid var(--hairline-strong);
+  color: var(--text-muted);
+  font-size: var(--text-sm);
+}
+
+.note > :last-child {
+  margin-bottom: 0;
+}

@@ -1,0 +1,96 @@
+/* --- Scrubbed (default) layout --- */
+.track {
+  position: relative;
+  /* height set inline from the number of beats */
+}
+
+.sticky {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow: hidden;
+  background: radial-gradient(ellipse 80% 70% at 30% 45%, var(--ink-2), var(--ink) 70%);
+}
+
+.canvasWrap {
+  position: absolute;
+  inset: 0;
+}
+
+/* Darkens the lower-left so captions stay legible over the scene. */
+.scrim {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(to top, color-mix(in srgb, var(--ink) 92%, transparent), transparent 40%),
+    linear-gradient(to right, color-mix(in srgb, var(--ink) 72%, transparent), transparent 48%);
+}
+
+.captions {
+  position: absolute;
+  left: clamp(var(--space-5), 6vw, var(--space-9));
+  bottom: clamp(var(--space-6), 9vh, var(--space-9));
+  width: min(34rem, 82vw);
+  height: 10rem;
+  pointer-events: none;
+}
+
+.beat {
+  position: absolute;
+  inset: 0;
+  will-change: opacity, transform;
+}
+
+.beatKicker {
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  color: var(--accent);
+}
+
+.beatTitle {
+  margin-top: var(--space-2);
+  font-size: var(--text-2xl);
+  color: var(--text);
+}
+
+.beatText {
+  margin-top: var(--space-2);
+  max-width: 32rem;
+  color: var(--text-muted);
+  font-size: var(--text-base);
+}
+
+.hint {
+  position: absolute;
+  top: calc(4rem + var(--space-4));
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  letter-spacing: 0.14em;
+  color: var(--text-muted);
+}
+
+/* --- Reduced-motion static layout --- */
+.staticWrap {
+  padding: var(--space-7) 0;
+  background: var(--ink);
+}
+
+.staticStage {
+  height: 50vh;
+  min-height: 320px;
+}
+
+.staticBeats {
+  list-style: none;
+  max-width: var(--container);
+  margin: var(--space-6) auto 0;
+  padding: 0 var(--space-5);
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+  gap: var(--space-5);
+}

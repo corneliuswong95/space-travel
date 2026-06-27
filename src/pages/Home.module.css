@@ -1,0 +1,150 @@
+/* --- Hero --- */
+.hero {
+  padding-top: var(--space-8);
+}
+
+.heroInner {
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: var(--space-7);
+  align-items: center;
+}
+
+.heroText {
+  max-width: 38rem;
+}
+
+.kicker {
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  color: var(--accent);
+}
+
+.title {
+  margin-top: var(--space-4);
+  font-size: var(--text-display);
+}
+
+.lead {
+  margin-top: var(--space-5);
+  max-width: var(--measure);
+  font-size: var(--text-lg);
+  color: var(--text-muted);
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  margin-top: var(--space-6);
+}
+
+.diagram {
+  justify-self: center;
+}
+
+/* --- The path --- */
+.path {
+  margin-top: var(--space-10);
+}
+
+.pathHead {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-4);
+  padding-bottom: var(--space-3);
+  border-bottom: 1px solid var(--hairline);
+}
+
+.pathProgress {
+  font-size: var(--text-sm);
+  color: var(--text-muted);
+}
+
+.cards {
+  list-style: none;
+  margin: var(--space-5) 0 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(18rem, 1fr));
+  gap: var(--space-4);
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding: var(--space-5);
+  background: var(--surface);
+  border: 1px solid var(--hairline);
+  border-radius: var(--radius-lg);
+  text-decoration: none;
+  color: var(--text);
+  transition:
+    transform var(--dur-fast) var(--ease-out),
+    border-color var(--dur-fast) var(--ease-out),
+    background var(--dur-fast) var(--ease-out);
+}
+
+a.card:hover {
+  transform: translateY(-2px);
+  border-color: var(--hairline-strong);
+}
+
+.cardDone {
+  border-left: 3px solid var(--ok);
+}
+
+.cardPlanned {
+  opacity: 0.62;
+}
+
+.cardTop {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-3);
+}
+
+.cardCat {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  letter-spacing: 0.16em;
+  color: var(--accent);
+}
+
+.cardMeta {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--text-muted);
+}
+
+.metaDone {
+  color: var(--ok);
+}
+
+.cardTitle {
+  margin-top: var(--space-3);
+  font-size: var(--text-xl);
+}
+
+.cardSummary {
+  margin-top: var(--space-2);
+  color: var(--text-muted);
+  font-size: var(--text-sm);
+  line-height: 1.6;
+}
+
+/* --- Responsive --- */
+@media (max-width: 800px) {
+  .heroInner {
+    grid-template-columns: 1fr;
+  }
+  .diagram {
+    order: -1;
+    max-width: 300px;
+  }
+}

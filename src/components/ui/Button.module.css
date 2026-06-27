@@ -1,0 +1,68 @@
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  font-family: var(--font-body);
+  font-weight: 500;
+  line-height: 1;
+  white-space: nowrap;
+  text-decoration: none;
+  cursor: pointer;
+  border: 1px solid transparent;
+  border-radius: var(--radius);
+  transition: transform var(--dur-fast) var(--ease-out),
+    background var(--dur-fast) var(--ease-out), border-color var(--dur-fast) var(--ease-out),
+    color var(--dur-fast) var(--ease-out), filter var(--dur-fast) var(--ease-out);
+}
+
+.md {
+  padding: 0.7em 1.2em;
+  font-size: var(--text-base);
+}
+
+.sm {
+  padding: 0.5em 0.9em;
+  font-size: var(--text-sm);
+}
+
+.primary {
+  background: var(--amber);
+  color: var(--ink);
+  border-color: var(--amber);
+}
+.primary:hover {
+  filter: brightness(1.07);
+  transform: translateY(-1px);
+}
+
+.ghost {
+  background: transparent;
+  color: var(--text);
+  border-color: var(--hairline-strong);
+}
+.ghost:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.quiet {
+  background: transparent;
+  color: var(--text-muted);
+}
+.quiet:hover {
+  color: var(--text);
+  background: color-mix(in srgb, var(--slate) 12%, transparent);
+}
+
+.btn:active {
+  transform: translateY(0);
+}
+
+.btn:disabled,
+.btn[aria-disabled='true'] {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+  filter: none;
+}

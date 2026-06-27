@@ -1,0 +1,28 @@
+.shell {
+  display: flex;
+  flex-direction: column;
+  min-height: 100dvh;
+}
+
+.main {
+  flex: 1;
+}
+
+.footer {
+  margin-top: var(--space-10);
+  padding-block: var(--space-6);
+  border-top: 1px solid var(--hairline);
+  color: var(--text-muted);
+}
+
+.footMark {
+  font-size: var(--text-sm);
+  letter-spacing: 0.14em;
+  color: var(--accent);
+}
+
+.footNote {
+  margin-top: var(--space-2);
+  max-width: 52ch;
+  font-size: var(--text-sm);
+}

@@ -1,0 +1,32 @@
+.svg {
+  width: 100%;
+  height: auto;
+  max-width: 440px;
+  margin-inline: auto;
+}
+
+.ring {
+  fill: none;
+  stroke: var(--hairline);
+  stroke-width: 1;
+}
+
+.sunGlow {
+  fill: var(--amber);
+  opacity: 0.18;
+}
+
+.orbit {
+  animation-name: orbit-spin;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+
+@keyframes orbit-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}

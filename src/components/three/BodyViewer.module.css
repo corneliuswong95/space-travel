@@ -1,0 +1,104 @@
+.viewer {
+  margin: var(--space-6) 0;
+}
+
+.stage {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid var(--hairline-strong);
+  border-radius: var(--radius-lg);
+  background: radial-gradient(
+    ellipse 75% 60% at 50% 42%,
+    color-mix(in srgb, var(--ink-2) 92%, transparent),
+    var(--ink)
+  );
+}
+
+.canvasWrap {
+  width: 100%;
+  height: clamp(260px, 42vw, 380px);
+  touch-action: pan-y;
+}
+
+.cornerTL,
+.cornerTR {
+  position: absolute;
+  top: var(--space-3);
+  z-index: 2;
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  letter-spacing: 0.14em;
+  color: var(--text-muted);
+  pointer-events: none;
+}
+.cornerTL {
+  left: var(--space-4);
+  color: var(--accent);
+}
+.cornerTR {
+  right: var(--space-4);
+}
+
+.readouts {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  margin: 0;
+  border-top: 1px solid var(--hairline);
+  background: color-mix(in srgb, var(--ink) 55%, transparent);
+}
+
+.cell {
+  padding: var(--space-3) var(--space-4);
+  border-left: 1px solid var(--hairline);
+}
+.cell:first-child {
+  border-left: none;
+}
+
+.cell dt {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--text-muted);
+}
+
+.cell dd {
+  margin: var(--space-1) 0 0;
+  font-family: var(--font-mono);
+  font-size: var(--text-base);
+  color: var(--text);
+  font-feature-settings: 'tnum' 1;
+}
+
+.unit {
+  color: var(--text-muted);
+  font-size: var(--text-sm);
+}
+
+.caption {
+  margin-top: var(--space-3);
+  font-size: var(--text-sm);
+  color: var(--text-muted);
+  text-align: center;
+}
+
+/* Skeleton placeholder (shown while the 3D chunk loads). */
+.loading {
+  display: grid;
+  place-items: center;
+  height: 100%;
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  letter-spacing: 0.12em;
+  color: var(--text-muted);
+}
+
+@media (max-width: 560px) {
+  .readouts {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .cell:nth-child(3) {
+    border-left: none;
+  }
+}
