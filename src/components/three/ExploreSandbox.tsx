@@ -163,31 +163,31 @@ export function ExploreSandbox() {
           </Canvas>
         </div>
 
-        <div className={styles.info}>
-          <span className={styles.infoKicker}>
-            {body.symbol} · {body.category}
-          </span>
-          <h3 className={styles.infoName}>{body.name}</h3>
-          <p className={styles.infoBlurb}>{body.blurb}</p>
-          <dl className={styles.readouts}>
-            {readouts.map((r) => (
-              <div className={styles.cell} key={r.label}>
-                <dt>{r.label}</dt>
-                <dd>
-                  {r.value}
-                  {r.unit ? <span className={styles.unit}> {r.unit}</span> : null}
-                </dd>
-              </div>
-            ))}
-          </dl>
-          <Link className={styles.infoLink} to={`/lessons/${lessonSlug}`}>
-            Open lesson · {lessonTitle} →
-          </Link>
-        </div>
-
         <span className={styles.hint} aria-hidden="true">
           drag to orbit · pick a world below
         </span>
+      </div>
+
+      <div className={styles.info}>
+        <span className={styles.infoKicker}>
+          {body.symbol} · {body.category}
+        </span>
+        <h3 className={styles.infoName}>{body.name}</h3>
+        <p className={styles.infoBlurb}>{body.blurb}</p>
+        <dl className={styles.readouts}>
+          {readouts.map((r) => (
+            <div className={styles.cell} key={r.label}>
+              <dt>{r.label}</dt>
+              <dd>
+                {r.value}
+                {r.unit ? <span className={styles.unit}> {r.unit}</span> : null}
+              </dd>
+            </div>
+          ))}
+        </dl>
+        <Link className={styles.infoLink} to={`/lessons/${lessonSlug}`}>
+          Open lesson · {lessonTitle} →
+        </Link>
       </div>
 
       <div className={styles.rail} role="group" aria-label="Choose a body to focus">

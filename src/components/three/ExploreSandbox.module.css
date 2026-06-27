@@ -1,4 +1,5 @@
 .sandbox {
+  position: relative;
   width: 100%;
   overflow: hidden;
   border: 1px solid var(--hairline-strong);
@@ -161,21 +162,17 @@
 }
 
 @media (max-width: 640px) {
+  /* Stack the readout below the stage instead of overlaying — never cover the planet. */
   .info {
-    top: auto;
-    bottom: var(--space-4);
-    left: var(--space-4);
-    right: var(--space-4);
+    position: static;
     width: auto;
-  }
-  .infoBlurb {
-    display: none;
-  }
-  .readouts {
-    grid-template-columns: repeat(3, auto);
-    justify-content: start;
-    gap: var(--space-4);
-    margin-top: var(--space-3);
+    padding: var(--space-5);
+    background: transparent;
+    border: none;
+    border-top: 1px solid var(--hairline);
+    border-radius: 0;
+    backdrop-filter: none;
+    pointer-events: auto;
   }
   .hint {
     display: none;
