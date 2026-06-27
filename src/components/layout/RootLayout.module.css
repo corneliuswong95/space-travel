@@ -26,3 +26,10 @@
   max-width: 52ch;
   font-size: var(--text-sm);
 }
+
+.footBy {
+  margin-top: var(--space-4);
+  font-size: var(--text-xs);
+  letter-spacing: 0.08em;
+  color: var(--text-muted);
+}
