@@ -41,6 +41,23 @@
   transform: translateY(0);
 }
 
+/*
+ * On narrow screens an absolutely-positioned popover (left:0, up to 20rem wide) overflows the
+ * viewport for any term near the right edge — pushing horizontal scroll even while hidden. Pin
+ * it to the bottom of the viewport instead, where it always fits and reads clearly on a tap.
+ */
+@media (max-width: 640px) {
+  .termPop {
+    position: fixed;
+    left: var(--space-4);
+    right: var(--space-4);
+    bottom: var(--space-4);
+    top: auto;
+    width: auto;
+    max-width: none;
+  }
+}
+
 /* --- Readout --- */
 .readout {
   display: flex;
