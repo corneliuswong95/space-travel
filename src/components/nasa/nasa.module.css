@@ -604,9 +604,26 @@
 }
 
 @media (max-width: 760px) {
+  /* One scrolling column: the photo stays as big as it wants (full width, natural height),
+     the description follows below. Scroll down to read, scroll up to admire the photo. */
   .dialog {
-    grid-template-columns: 1fr;
-    grid-template-rows: auto 1fr;
+    display: block;
     max-height: 90vh;
+    overflow-y: auto;
+  }
+  /* Pin the close so it stays reachable while scrolling. */
+  .close {
+    position: sticky;
+    top: var(--space-3);
+    margin: var(--space-3) var(--space-3) 0 auto;
+    z-index: 3;
+  }
+  .lbImg {
+    height: auto;
+    max-height: none;
+  }
+  .lbInfo {
+    overflow: visible;
+    padding: var(--space-5);
   }
 }
