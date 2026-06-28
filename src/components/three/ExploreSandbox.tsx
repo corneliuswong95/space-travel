@@ -120,8 +120,8 @@ export function ExploreSandbox() {
         <div className={styles.canvasWrap}>
           <Canvas
             frameloop={inView ? 'always' : 'never'}
-            dpr={[1, lowEnd ? 1 : 1.5]}
-            gl={{ alpha: true, antialias: !lowEnd, powerPreference: 'high-performance' }}
+            dpr={[1, lowEnd ? 1.5 : 2]}
+            gl={{ alpha: true, antialias: true, powerPreference: 'high-performance' }}
             camera={{ position: [4, 7, 22], fov: 45 }}
           >
             <ambientLight intensity={0.2} />

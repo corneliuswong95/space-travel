@@ -14,8 +14,10 @@ export function Scene({ children, frameloop, lowEnd = false, cameraZ = 3.4 }: Sc
   return (
     <Canvas
       frameloop={frameloop}
-      dpr={[1, lowEnd ? 1 : 1.5]}
-      gl={{ antialias: !lowEnd, alpha: true, powerPreference: 'high-performance' }}
+      // A single textured sphere is light, so render crisp even on high-DPI phones; only a
+      // genuinely weak device caps lower. Antialiasing stays on — clean planet edges matter.
+      dpr={[1, lowEnd ? 1.5 : 2]}
+      gl={{ antialias: true, alpha: true, powerPreference: 'high-performance' }}
       camera={{ position: [0, 0, cameraZ], fov: 45 }}
     >
       {/* Low ambient so the night side stays dim and the terminator reads; the key light is

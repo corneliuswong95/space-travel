@@ -30,7 +30,7 @@ interface Atmo {
 }
 const ATMOSPHERE: Record<string, Atmo> = {
   venus: { color: '#f1e3b0', scale: 1.16, power: 2.6, intensity: 0.7 },
-  earth: { color: '#6fb0ff', scale: 1.18, power: 2.8, intensity: 1.0 },
+  earth: { color: '#6fb0ff', scale: 1.14, power: 3.4, intensity: 0.7 },
   mars: { color: '#e08750', scale: 1.13, power: 3.0, intensity: 0.4 },
   jupiter: { color: '#e8cda0', scale: 1.07, power: 4.0, intensity: 0.45 },
   saturn: { color: '#efdcae', scale: 1.07, power: 4.0, intensity: 0.4 },
