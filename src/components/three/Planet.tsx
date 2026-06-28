@@ -5,6 +5,7 @@ import { useTexture } from '@react-three/drei'
 
 import type { Body } from '@/data/planets'
 import { UNIT_SPHERE } from './shared'
+import { Atmosphere } from './Atmosphere'
 import { bodyTextureUrl, saturnRingUrl } from './textures'
 
 // Representative axial tilts (radians) so each world sits at a believable angle.
@@ -17,6 +18,24 @@ const TILT: Record<string, number> = {
   saturn: 0.47,
   uranus: 1.71,
   neptune: 0.49,
+}
+
+// Atmospheric limb glow per body (none for airless Mercury). Tuned to be felt, not neon —
+// Earth's blue edge is the strongest; the giants get a faint band in their own hue.
+interface Atmo {
+  color: string
+  scale: number
+  power: number
+  intensity: number
+}
+const ATMOSPHERE: Record<string, Atmo> = {
+  venus: { color: '#f1e3b0', scale: 1.16, power: 2.6, intensity: 0.7 },
+  earth: { color: '#6fb0ff', scale: 1.18, power: 2.8, intensity: 1.0 },
+  mars: { color: '#e08750', scale: 1.13, power: 3.0, intensity: 0.4 },
+  jupiter: { color: '#e8cda0', scale: 1.07, power: 4.0, intensity: 0.45 },
+  saturn: { color: '#efdcae', scale: 1.07, power: 4.0, intensity: 0.4 },
+  uranus: { color: '#c2eef0', scale: 1.09, power: 3.4, intensity: 0.5 },
+  neptune: { color: '#7aa2ff', scale: 1.1, power: 3.2, intensity: 0.6 },
 }
 
 interface PlanetProps {
@@ -80,6 +99,7 @@ export function Planet({
   map.anisotropy = 8
 
   const isGiant = body.category === 'gas giant' || body.category === 'ice giant'
+  const atmo = ATMOSPHERE[body.id]
 
   useFrame((_, delta) => {
     const mesh = ref.current
@@ -115,8 +135,14 @@ export function Planet({
             : undefined
         }
       >
-        <meshStandardMaterial map={map} roughness={isGiant ? 0.9 : 1} metalness={0} />
+        <meshStandardMaterial
+          map={map}
+          roughness={isGiant ? 0.9 : 1}
+          metalness={0}
+          {...(isGiant ? {} : { bumpMap: map, bumpScale: 0.04 })}
+        />
       </mesh>
+      {atmo ? <Atmosphere radius={radius} {...atmo} /> : null}
       {body.id === 'saturn' ? <SaturnRings radius={radius} /> : null}
     </group>
   )

@@ -66,7 +66,7 @@ export function BodyViewer({ body, caption }: BodyViewerProps) {
           role="img"
           aria-label={`Interactive 3D model of ${data.name}. A stylised model, not to scale.`}
         >
-          <Scene frameloop={frameloop} lowEnd={lowEnd} cameraZ={isSun ? 3.2 : 3.4}>
+          <Scene frameloop={frameloop} lowEnd={lowEnd} cameraZ={isSun ? 4.4 : 3.4}>
             {isSun ? (
               <Sun animate={!reduced} />
             ) : (

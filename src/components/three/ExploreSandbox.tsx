@@ -124,8 +124,8 @@ export function ExploreSandbox() {
             gl={{ alpha: true, antialias: !lowEnd, powerPreference: 'high-performance' }}
             camera={{ position: [4, 7, 22], fov: 45 }}
           >
-            <ambientLight intensity={0.45} />
-            <directionalLight position={[12, 10, 16]} intensity={1.4} />
+            <ambientLight intensity={0.2} />
+            <directionalLight position={[12, 10, 16]} intensity={1.7} color="#fff6e8" />
             <Suspense fallback={null}>
               {BODIES.map((b, i) => (
                 <group

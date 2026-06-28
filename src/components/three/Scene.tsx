@@ -18,8 +18,10 @@ export function Scene({ children, frameloop, lowEnd = false, cameraZ = 3.4 }: Sc
       gl={{ antialias: !lowEnd, alpha: true, powerPreference: 'high-performance' }}
       camera={{ position: [0, 0, cameraZ], fov: 45 }}
     >
-      <ambientLight intensity={0.35} />
-      <directionalLight position={[5, 3, 5]} intensity={2} />
+      {/* Low ambient so the night side stays dim and the terminator reads; the key light is
+          strong and warm like sunlight. */}
+      <ambientLight intensity={0.12} />
+      <directionalLight position={[5, 3, 5]} intensity={2.6} color="#fff6e8" />
       <Suspense fallback={null}>{children}</Suspense>
       <OrbitControls
         makeDefault
