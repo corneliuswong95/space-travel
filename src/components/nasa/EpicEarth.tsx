@@ -4,6 +4,7 @@ import { useEpic } from '@/hooks/useNasa'
 import type { EpicImage } from '@/data/nasa'
 import { FeedError, FeedLoading } from './FeedStates'
 import { Lightbox } from './Lightbox'
+import { PhotoZoom } from './PhotoZoom'
 import styles from './nasa.module.css'
 
 // "2024-01-15 00:27:45" -> "00:27"
@@ -14,6 +15,7 @@ function utcTime(date: string): string {
 export function EpicEarth() {
   const { status, data, reload } = useEpic()
   const [selected, setSelected] = useState<EpicImage | null>(null)
+  const [zoom, setZoom] = useState(false)
   const frames = (data ?? []).slice(0, 12)
 
   return (
@@ -58,29 +60,55 @@ export function EpicEarth() {
       ) : null}
 
       {selected ? (
-        <Lightbox onClose={() => setSelected(null)} label="Earth from DSCOVR EPIC">
-          <div className={styles.lbMedia}>
-            <img
-              className={styles.lbImg}
-              src={selected.imageUrl}
-              alt="Earth, full disk from DSCOVR EPIC"
-            />
-          </div>
-          <div className={styles.lbInfo}>
-            <span className={styles.kicker}>{selected.date} UTC</span>
-            <h2 className={styles.lbTitle}>Earth from a million miles</h2>
-            <p className={styles.lbText}>
-              {selected.caption ||
-                'A full-disk, natural-colour image of the sunlit Earth from NASA’s EPIC camera aboard the NOAA DSCOVR spacecraft, parked at the Sun–Earth L1 point about 1.5 million km away.'}
-            </p>
-            <div className={styles.aActions}>
-              <span className={styles.credit}>NASA / NOAA · DSCOVR EPIC</span>
-              <a className={styles.more} href={selected.imageUrl} target="_blank" rel="noreferrer">
-                Full image ↗
-              </a>
+        <>
+          <Lightbox
+            onClose={() => {
+              setSelected(null)
+              setZoom(false)
+            }}
+            label="Earth from DSCOVR EPIC"
+          >
+            <div className={styles.lbMedia}>
+              <button
+                type="button"
+                className={styles.lbZoomBtn}
+                onClick={() => setZoom(true)}
+                aria-label="Zoom into Earth"
+              >
+                <img
+                  className={styles.lbImg}
+                  src={selected.imageUrl}
+                  alt="Earth, full disk from DSCOVR EPIC"
+                />
+                <span className={styles.lbZoomBadge} aria-hidden="true">
+                  ⤢
+                </span>
+              </button>
             </div>
-          </div>
-        </Lightbox>
+            <div className={styles.lbInfo}>
+              <span className={styles.kicker}>{selected.date} UTC</span>
+              <h2 className={styles.lbTitle}>Earth from a million miles</h2>
+              <p className={styles.lbText}>
+                {selected.caption ||
+                  'A full-disk, natural-colour image of the sunlit Earth from NASA’s EPIC camera aboard the NOAA DSCOVR spacecraft, parked at the Sun–Earth L1 point about 1.5 million km away.'}
+              </p>
+              <div className={styles.aActions}>
+                <span className={styles.credit}>NASA / NOAA · DSCOVR EPIC</span>
+                <a className={styles.more} href={selected.imageUrl} target="_blank" rel="noreferrer">
+                  Full image ↗
+                </a>
+              </div>
+            </div>
+          </Lightbox>
+
+          {zoom ? (
+            <PhotoZoom
+              src={selected.imageUrl}
+              alt="Earth from DSCOVR EPIC"
+              onClose={() => setZoom(false)}
+            />
+          ) : null}
+        </>
       ) : null}
     </section>
   )
