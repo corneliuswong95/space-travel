@@ -108,14 +108,22 @@ function toApod(j: ApodRaw): Apod {
 }
 
 export async function fetchApod(signal?: AbortSignal): Promise<Apod> {
-  const cacheKey = `orrery:apod:${today()}`
+  const day = today()
+  const cacheKey = `orrery:apod:${day}`
   const cached = readCache<Apod>(cacheKey)
-  if (cached) return cached
+  // Trust the cache only if it actually holds *today's* picture. Opening the app before NASA
+  // publishes today's APOD (~05:00 UTC) would otherwise pin yesterday's image under today's key
+  // and keep serving it for the rest of the day.
+  if (cached && cached.date === day) return cached
 
   const res = await fetchRetry(`${BASE}/planetary/apod?api_key=${API_KEY}&thumbs=true`, signal)
   if (!res.ok) throw new Error(`NASA APOD request failed (${res.status})`)
   const apod = toApod((await res.json()) as ApodRaw)
-  writeCache(cacheKey, apod)
+  // Cache only once it's genuinely today's, so we never pin an older picture under today's key.
+  if (apod.date === day) {
+    pruneCache('orrery:apod:', cacheKey)
+    writeCache(cacheKey, apod)
+  }
   return apod
 }
 
@@ -146,7 +154,9 @@ export async function fetchApodForMonth(
   const inProgress = end === today()
   const cacheKey = inProgress ? `orrery:apod-m:${ym}:${today()}` : `orrery:apod-m:${ym}`
   const cached = readCache<Apod[]>(cacheKey)
-  if (cached) return cached
+  // For the current month, trust the cache only once it already includes today's picture —
+  // otherwise a fetch made before NASA published today's would hide it for the rest of the day.
+  if (cached && (!inProgress || cached[0]?.date === end)) return cached
 
   const res = await fetchRetry(
     `${BASE}/planetary/apod?api_key=${API_KEY}&thumbs=true&start_date=${start}&end_date=${end}`,
@@ -155,8 +165,11 @@ export async function fetchApodForMonth(
   if (!res.ok) throw new Error(`NASA APOD request failed (${res.status})`)
   const items = ((await res.json()) as ApodRaw[]).map(toApod).reverse()
 
-  if (inProgress) pruneCache(`orrery:apod-m:${ym}:`, cacheKey)
-  writeCache(cacheKey, items)
+  // Skip caching the in-progress month until today's picture is actually in it.
+  if (!inProgress || items[0]?.date === end) {
+    if (inProgress) pruneCache(`orrery:apod-m:${ym}:`, cacheKey)
+    writeCache(cacheKey, items)
+  }
   return items
 }
 
