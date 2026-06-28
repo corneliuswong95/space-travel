@@ -15,11 +15,13 @@ instrument meets a beautiful old star chart."*
 
 ## Highlights
 
-- **A real learning path, not a sandbox.** Five sequenced lessons, each ending in a quiz with
-  explanatory feedback (on right *and* wrong answers). Progress is saved locally.
-- **3D that serves the lesson.** Reusable planets rendered with real 2K texture maps
-  (react-three-fiber), lazy-loaded and code-split so the prose is interactive before the canvas
-  arrives. A pinned, scroll-scrubbed GSAP tour walks the solar system in one lesson.
+- **A real learning path, not a sandbox.** Twelve sequenced lessons — a guided outward zoom from
+  the Sun to spacetime — each ending in a quiz with explanatory feedback (on right *and* wrong
+  answers). Progress is saved locally.
+- **3D that serves the lesson.** Reusable planets rendered with real 2K texture maps, an
+  atmospheric limb glow, and day/night lighting (react-three-fiber) — lazy-loaded and code-split
+  so the prose is interactive before the canvas arrives. A pinned, scroll-scrubbed GSAP tour walks
+  the solar system in one lesson.
 - **Live sky, layered on — never required.** A `/sky` hub pulls NASA's Astronomy Picture of the
   Day (full archive, browsable back to 1995), near-Earth objects, full-disk Earth, and space
   weather. If a feed is down, the lesson still works from static data.
@@ -31,19 +33,28 @@ instrument meets a beautiful old star chart."*
 
 | Area | What's there |
 | --- | --- |
-| **Lessons** (`/lessons/:slug`) | Five MDX lessons with atlas-plate headers (catalog number, hairline rule, real coordinates/stats), inline 3D viewers, and a check-for-understanding quiz. |
-| **The sky** (`/sky`) | Live hub: APOD archive with **month/year filter + lazy infinite scroll** back to the first picture (June 1995); near-Earth objects for the week; EPIC full-disk Earth; space weather (solar flares + geomagnetic storms); keyless NASA image-library search. Shared accessible lightbox. |
+| **Lessons** (`/lessons/:slug`) | Twelve MDX lessons with atlas-plate headers (catalog number, hairline rule, real coordinates/stats), inline 3D viewers, fun-fact tangents, and a check-for-understanding quiz. |
+| **The sky** (`/sky`) | Live hub: APOD archive with **month/year filter + lazy infinite scroll** back to the first picture (June 1995); near-Earth objects for the week; EPIC full-disk Earth; space weather (solar flares + geomagnetic storms); keyless NASA image-library search. Shared accessible lightbox; the Picture of the Day and EPIC Earth photos open a **zoom** view (pinch / scroll / double-tap). |
 | **Launches** (`/launches`) | Upcoming and past-week rocket launches (Launch Library 2) and recent spaceflight headlines (Spaceflight News API) — both keyless. |
 | **Explore** (`/explore`) | Free-roam solar-system sandbox: orbit the scene, pick any body (rail or click), and the camera eases to focus it with a live telemetry card. |
 | **Home** (`/`) | Lesson catalog, today's APOD + nearest asteroids, and a locally-computed "Moon tonight" card. |
 
 ### The learning path
 
+A guided outward zoom — from one ordinary star to the shape of spacetime:
+
 1. **What is a star?** — what the Sun is made of, why it shines, and why one ordinary star explains most of the sky.
 2. **The solar system** — eight planets in two families; reading distances and sizes in AU. *(Includes the GSAP scroll tour.)*
 3. **Why the Moon has phases** — phases vs. eclipses, and why we only ever see one face.
 4. **Mars, the red planet** — record-breaking terrain and the evidence for past water.
-5. **Reading the night sky** — constellations, the (backwards) magnitude scale, and coordinates.
+5. **The giant planets** — the gas and ice giants, their rings and moons.
+6. **Comets, asteroids & dwarf planets** — the small bodies and where they come from.
+7. **Reading the night sky** — constellations, the (backwards) magnitude scale, and coordinates.
+8. **How stars live and die** — the main sequence, and the fates set by a star's mass.
+9. **Black holes & neutron stars** — what's left when massive stars collapse.
+10. **The Milky Way & the galaxies** — our galaxy's structure and the galaxy zoo beyond.
+11. **The expanding universe** — redshift, Hubble's law, and the Big Bang.
+12. **Space, time & light** — light-years, the cosmic speed limit, and looking back in time.
 
 ## Tech stack
 
@@ -53,6 +64,8 @@ instrument meets a beautiful old star chart."*
 - **Recharts** — data visualization
 - **MDX** (`@mdx-js/rollup` + `@mdx-js/react`) — lessons authored as content with embedded components
 - **react-router-dom 7** — routing (lazy routes + scroll restoration)
+- **react-zoom-pan-pinch** — pinch / scroll / double-tap photo zoom
+- **@vercel/analytics** — privacy-light Web Analytics (no-op locally; collects on Vercel)
 - Self-hosted fonts via **@fontsource** — Fraunces (display), Inter (body), IBM Plex Mono (data)
 - **oxlint** for linting
 
@@ -117,17 +130,17 @@ an error.
 ```
 src/
 ├── pages/        Home, LessonPage, Sky, Launches, Explore, NotFound
-├── lessons/      THE CONTENT — index.ts (ordered registry) + NN-slug/{content.mdx, quiz.ts} (×5)
+├── lessons/      THE CONTENT — index.ts (ordered registry) + NN-slug/{content.mdx, quiz.ts} (×12)
 ├── components/
-│   ├── three/    Scene, Planet, Sun, BodyViewer, ExploreSandbox, textures, shared
+│   ├── three/    Scene, Planet, Sun, Atmosphere, BodyViewer, ExploreSandbox, textures, shared
 │   ├── story/    SolarTour (GSAP scroll tour), AtlasPlate (signature header), OrbitDiagram
 │   ├── quiz/     Quiz, Question
 │   ├── charts/   ComparisonChart (Recharts)
-│   ├── nasa/     SkyToday, Apod*, Lightbox, NeoPanel/Week, EpicEarth, SpaceWeather, ImageSearch, MoonTonight
+│   ├── nasa/     SkyToday, Apod*, Lightbox, PhotoZoom, NeoPanel/Week, EpicEarth, SpaceWeather, ImageSearch, MoonTonight
 │   ├── launches/ LaunchCard, NewsCard
-│   ├── mdx/      MDXComponents (Term, Readout, KeyIdea, Aside, …)
-│   ├── layout/   RootLayout (nav + footer)
-│   └── ui/       Button, Card, Nav, Loader
+│   ├── mdx/      MDXComponents (Term, Readout, KeyIdea, Aside, FunFact, …)
+│   ├── layout/   RootLayout (nav + footer + analytics)
+│   └── ui/       Button, Card, Nav (hamburger on mobile), Loader
 ├── data/         planets.ts (static) · nasa.ts · launches.ts · news.ts · nasaImages.ts · cache.ts
 ├── hooks/        useProgress, useAsync, useNasa, useSpace, useExplore, useInView, usePrefersReducedMotion
 └── styles/       tokens.css (design tokens), base.css

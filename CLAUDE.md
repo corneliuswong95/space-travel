@@ -23,6 +23,8 @@
 - recharts — data visualization
 - @mdx-js/rollup + @mdx-js/react — lessons authored in MDX; `MDXProvider` supplies styled components
 - react-router-dom — routing (added; implied by `pages/`)
+- react-zoom-pan-pinch — pinch / scroll / double-tap photo zoom (the `/sky` lightboxes)
+- @vercel/analytics — privacy-light Web Analytics (`<Analytics/>`; no-op locally, collects on Vercel)
 - @fontsource-variable/{fraunces,inter} + @fontsource/ibm-plex-mono — self-hosted fonts
 
 **Conventions**
@@ -46,6 +48,13 @@
   loaded per body via drei `useTexture` (see `src/components/three/textures.ts`); Saturn's ring
   uses the alpha PNG with radial-remapped UVs. Credit is in the footer + `public/textures/CREDITS.txt`.
   Three.js is lazy-loaded (its own chunk) so lesson prose is interactive before the canvas arrives.
+  Bodies also get a Fresnel atmosphere rim (`src/components/three/Atmosphere.tsx`) and the Sun a
+  soft corona; scenes use low ambient + a warm key light for a real day/night terminator.
+- Photo zoom is a fullscreen overlay (`src/components/nasa/PhotoZoom.tsx`, react-zoom-pan-pinch)
+  opened from the APOD and EPIC lightboxes — a **tap zooms**, a **drag still scrolls** the lightbox.
+- Deploys as a static SPA (Vercel recommended). `vercel.json` + `public/_redirects` add the SPA
+  history fallback so deep links resolve; Web Analytics via `@vercel/analytics`. `VITE_NASA_API_KEY`
+  goes in the host's env vars **and** local `.env` (gitignored). See README "Deploy".
 
 **Build status**
 - [x] Scaffold, deps, MDX + alias config, design system, signature header
@@ -67,8 +76,11 @@
       (rail or click in-scene) and the camera eases to focus it with a live telemetry card.
       See `src/components/three/ExploreSandbox.tsx`.
 
-**The full build order (1–7) is complete.** Since then: all five lessons authored (stars,
-solar system, Moon phases, Mars, reading the night sky); planets render with real texture maps;
+**The full build order (1–7) is complete.** Since then: the learning path grew to **twelve
+lessons** — a guided outward zoom from the Sun to spacetime (stars, solar system, Moon phases,
+Mars, the giant planets, comets/asteroids/dwarf planets, reading the night sky, how stars live &
+die, black holes & neutron stars, the Milky Way & galaxies, the expanding universe, space–time &
+light), each with a conceptual quiz and `FunFact` tangents; planets render with real texture maps;
 Explore ↔ lessons cross-link; Home shows a locally-computed "Moon tonight" card; and a
 `/launches` tab shows upcoming + past-week launches (Launch Library 2) and space headlines
 (Spaceflight News API), both keyless. `VITE_NASA_API_KEY` is set in `.env` (gitignored).
@@ -82,6 +94,14 @@ geomagnetic storms); the week's near-Earth objects (NeoWs); and a NASA image-lib
 `useApodArchive` hook (`src/hooks/useNasa.ts`); other feeds use the generic `src/hooks/useAsync.ts`.
 The Mars rover gallery was dropped (NASA's `mars-photos` endpoint 404s) and replaced by EPIC; the
 EONET Earth-events feed was also removed.
+
+**Polish pass since then:** the header collapses to a hamburger menu on phones; the Explore info
+card and lesson term-tooltips were made mobile-safe; the APOD/EPIC lightboxes scroll as one column
+on mobile (big photo, scroll for the description) and the photo opens a fullscreen pinch-zoom
+viewer. 3D bodies gained a Fresnel atmosphere rim and a reworked Sun corona with a real terminator.
+The single-APOD cache self-corrects so it never sticks on yesterday's picture before NASA publishes
+today's (validates the cached date). Deploy + Web Analytics wired up (see README). Footer reads
+"By Cornelius Wong".
 
 ---
 
@@ -109,8 +129,8 @@ flat fact page.
 - GSAP + @gsap/react (`useGSAP`) for scroll-driven storytelling and motion (GSAP + all plugins free as of 2025)
 - Recharts for data visualization
 - MDX (`@mdx-js/rollup`) so lessons are authored as content with embedded components
-- NASA Open APIs for live data (APOD, near-Earth objects, Mars rover photos). Free key from
-  api.nasa.gov; store as `VITE_NASA_API_KEY`, never commit it.
+- NASA Open APIs for live data (APOD, near-Earth objects, EPIC full-disk Earth, DONKI space
+  weather). Free key from api.nasa.gov; store as `VITE_NASA_API_KEY`, never commit it.
 
 ## 3. Architecture
 Lessons are content, not code. The 3D, quiz, and chart pieces are reusable components.
@@ -118,23 +138,25 @@ Lessons are content, not code. The 3D, quiz, and chart pieces are reusable compo
 ```
 src/  (── = actual current layout; the original plan is preserved in the prose around it)
 ├── pages/        Home, LessonPage, Sky, Launches, Explore, NotFound
-├── lessons/      THE CONTENT — index.ts (ordered registry) + NN-slug/{content.mdx, quiz.ts} (×5)
+├── lessons/      THE CONTENT — index.ts (ordered registry) + NN-slug/{content.mdx, quiz.ts} (×12)
 ├── components/
-│   ├── three/    Scene, Planet, Sun, BodyViewer, ExploreSandbox, SolarTour glue, textures, shared
+│   ├── three/    Scene, Planet, Sun, Atmosphere, BodyViewer, ExploreSandbox, textures, shared
 │   ├── story/    SolarTour (GSAP scroll tour), AtlasPlate (signature header), OrbitDiagram
 │   ├── quiz/     Quiz, Question
 │   ├── charts/   ComparisonChart (Recharts)
-│   ├── nasa/     SkyToday, Apod{Panel,Card}, ApodLightbox, Lightbox, NeoPanel, NeoWeek,
+│   ├── nasa/     SkyToday, Apod{Panel,Card}, ApodLightbox, Lightbox, PhotoZoom, NeoPanel, NeoWeek,
 │   │             EpicEarth, SpaceWeather, ImageSearch, MoonTonight, FeedStates
 │   ├── launches/ LaunchCard, NewsCard
-│   ├── mdx/      MDXComponents (Term, Readout, KeyIdea, Aside, …)
-│   ├── layout/   RootLayout
-│   └── ui/       Button, Card, Nav, Loader
+│   ├── mdx/      MDXComponents (Term, Readout, KeyIdea, Aside, FunFact, …)
+│   ├── layout/   RootLayout (nav + footer + <Analytics/>)
+│   └── ui/       Button, Card, Nav (hamburger on mobile), Loader
 ├── data/         planets.ts (static, offline) · nasa.ts (APOD/NEO/EPIC/DONKI — key) ·
 │                 launches.ts, news.ts, nasaImages.ts (keyless feeds) · cache.ts (TTL)
 ├── hooks/        useProgress, useAsync (generic), useNasa, useSpace, useExplore,
 │                 useInView, usePrefersReducedMotion
 └── styles/       tokens.css, base.css
+
+Root: vercel.json + public/_redirects (SPA history fallback) · .env / .env.example (NASA key)
 ```
 
 Principle: static facts render instantly and work offline; live NASA data is an enhancement,
