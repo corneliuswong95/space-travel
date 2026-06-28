@@ -1,5 +1,6 @@
 import { Suspense } from 'react'
 import { Outlet, ScrollRestoration } from 'react-router-dom'
+import { Analytics } from '@vercel/analytics/react'
 
 import { Nav } from '@/components/ui/Nav'
 import { Loader } from '@/components/ui/Loader'
@@ -29,6 +30,7 @@ export function RootLayout() {
           <p className={`mono ${styles.footBy}`}>By Cornelius Wong</p>
         </div>
       </footer>
+      <Analytics />
     </div>
   )
 }
