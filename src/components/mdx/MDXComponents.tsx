@@ -59,12 +59,23 @@ function Aside({ children }: { children: ReactNode }) {
   return <aside className={styles.note}>{children}</aside>
 }
 
+/** A true-but-delightful tangent — the margin curio. Wonder, not hype. */
+function FunFact({ children }: { children: ReactNode }) {
+  return (
+    <aside className={styles.funFact}>
+      <span className={styles.funFactTag}>✦ Fun fact</span>
+      <div className={styles.funFactBody}>{children}</div>
+    </aside>
+  )
+}
+
 /** Components made available to every MDX lesson via MDXProvider. */
 export const mdxComponents = {
   Term,
   Readout,
   KeyIdea,
   Aside,
+  FunFact,
   ComparisonChart,
   AtlasPlate,
   BodyViewer,

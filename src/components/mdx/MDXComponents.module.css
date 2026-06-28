@@ -128,3 +128,31 @@
 .note > :last-child {
   margin-bottom: 0;
 }
+
+/*
+ * --- Fun fact: a true but delightful tangent ---
+ * Distinct from KeyIdea (a full accent-washed box): this is an inset card with a single
+ * rust tick and a starred mono label, so the two never read as the same callout.
+ */
+.funFact {
+  margin: var(--space-6) 0;
+  padding: var(--space-4) var(--space-5);
+  background: var(--surface-inset);
+  border: 1px solid var(--hairline);
+  border-left: 3px solid var(--accent-2);
+  border-radius: var(--radius);
+}
+
+.funFactTag {
+  display: block;
+  margin-bottom: var(--space-2);
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  color: var(--accent-2);
+}
+
+.funFactBody > :last-child {
+  margin-bottom: 0;
+}
