@@ -1,6 +1,7 @@
 import { Suspense } from 'react'
 import { Outlet, ScrollRestoration } from 'react-router-dom'
 import { Analytics } from '@vercel/analytics/react'
+import { SpeedInsights } from '@vercel/speed-insights/react'
 
 import { Nav } from '@/components/ui/Nav'
 import { Loader } from '@/components/ui/Loader'
@@ -31,6 +32,7 @@ export function RootLayout() {
         </div>
       </footer>
       <Analytics />
+      <SpeedInsights />
     </div>
   )
 }
