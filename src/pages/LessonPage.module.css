@@ -103,6 +103,66 @@
   font-weight: 600;
 }
 
+/* --- Reading theme toggle --- */
+.readingBar {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: var(--space-3);
+  max-width: var(--measure);
+  margin: 0 auto var(--space-4);
+}
+
+.readingLabel {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  color: var(--text-muted);
+}
+
+.themeToggle {
+  display: inline-flex;
+  border: 1px solid var(--hairline);
+  border-radius: var(--radius-pill);
+  overflow: hidden;
+}
+
+.themeOpt {
+  appearance: none;
+  border: 0;
+  background: transparent;
+  padding: var(--space-1) var(--space-4);
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition:
+    background var(--dur-fast) var(--ease-out),
+    color var(--dur-fast) var(--ease-out);
+}
+
+.themeOpt[aria-pressed='true'] {
+  background: var(--accent);
+  color: var(--ink);
+}
+
+.themeOpt:not([aria-pressed='true']):hover {
+  color: var(--text);
+}
+
+.themeOpt:focus-visible {
+  outline: none;
+  box-shadow: var(--focus-ring);
+}
+
+/* Dark reading mode: raise the panel off the (equally dark) page background. */
+.proseDark {
+  background: var(--surface);
+}
+
 /* --- Navigation --- */
 .pageNav {
   display: flex;

@@ -8,6 +8,7 @@ import { Button } from '@/components/ui/Button'
 import { mdxComponents } from '@/components/mdx/MDXComponents'
 import { getLesson, isAvailable, lessons } from '@/lessons'
 import { useProgress } from '@/hooks/useProgress'
+import { useReadingTheme } from '@/hooks/useReadingTheme'
 import { Loader } from '@/components/ui/Loader'
 import { NotFound } from './NotFound'
 import styles from './LessonPage.module.css'
@@ -20,6 +21,7 @@ const SolarTour = lazy(() =>
 export function LessonPage() {
   const { slug } = useParams()
   const { isComplete, markComplete } = useProgress()
+  const { theme, setReadingTheme } = useReadingTheme()
   const entry = slug ? getLesson(slug) : undefined
 
   const handleComplete = useCallback(() => {
@@ -92,7 +94,32 @@ export function LessonPage() {
       ) : null}
 
       <div className={`container ${styles.body}`}>
-        <div className={`surface-paper ${styles.prose}`}>
+        <div className={styles.readingBar}>
+          <span className={styles.readingLabel}>Reading</span>
+          <div className={styles.themeToggle} role="group" aria-label="Reading theme">
+            <button
+              type="button"
+              className={styles.themeOpt}
+              aria-pressed={theme === 'paper'}
+              onClick={() => setReadingTheme('paper')}
+            >
+              Paper
+            </button>
+            <button
+              type="button"
+              className={styles.themeOpt}
+              aria-pressed={theme === 'dark'}
+              onClick={() => setReadingTheme('dark')}
+            >
+              Dark
+            </button>
+          </div>
+        </div>
+        <div
+          className={`${theme === 'dark' ? 'surface-ink' : 'surface-paper'} ${styles.prose} ${
+            theme === 'dark' ? styles.proseDark : ''
+          }`.trim()}
+        >
           <MDXProvider components={mdxComponents}>
             <Content />
           </MDXProvider>
