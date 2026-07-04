@@ -5,9 +5,22 @@ import type { QuizQuestion } from '@/components/quiz/types'
 
 export type LessonStatus = 'available' | 'planned'
 
+/** A part of the learning path: a titled group of lessons. */
+export interface Chapter {
+  /** Chapter number, 1-based; matches `chapter` on each lesson. */
+  id: number
+  /** Roman numeral shown in the UI, e.g. "II". */
+  numeral: string
+  title: string
+  /** One-line tagline under the chapter heading. */
+  blurb: string
+}
+
 interface LessonMeta {
   slug: string
   order: number
+  /** Which chapter this lesson belongs to (see the `chapters` registry). */
+  chapter: number
   /** Catalog designation for the hero plate, e.g. "PLATE 01". */
   catalog: string
   title: string

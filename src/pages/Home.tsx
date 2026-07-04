@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import { Button } from '@/components/ui/Button'
 import { OrbitDiagram } from '@/components/story/OrbitDiagram'
 import { SkyToday } from '@/components/nasa/SkyToday'
-import { lessons, isAvailable } from '@/lessons'
+import { lessons, chapters, isAvailable } from '@/lessons'
 import type { LessonEntry } from '@/lessons/types'
 import { useProgress } from '@/hooks/useProgress'
 import styles from './Home.module.css'
@@ -78,13 +78,32 @@ export function Home() {
           </span>
         </div>
 
-        <ol className={styles.cards}>
-          {lessons.map((l) => (
-            <li key={l.slug}>
-              <LessonCard lesson={l} done={isAvailable(l) && isComplete(l.slug)} />
-            </li>
-          ))}
-        </ol>
+        {chapters.map((ch) => {
+          const chapterLessons = lessons.filter((l) => l.chapter === ch.id)
+          if (chapterLessons.length === 0) return null
+          return (
+            <section
+              key={ch.id}
+              className={styles.chapter}
+              aria-labelledby={`chapter-${ch.id}`}
+            >
+              <header className={styles.chapterHead}>
+                <span className={styles.chapterKicker}>Chapter {ch.numeral}</span>
+                <h3 id={`chapter-${ch.id}`} className={styles.chapterTitle}>
+                  {ch.title}
+                </h3>
+                <p className={styles.chapterBlurb}>{ch.blurb}</p>
+              </header>
+              <ol className={styles.cards}>
+                {chapterLessons.map((l) => (
+                  <li key={l.slug}>
+                    <LessonCard lesson={l} done={isAvailable(l) && isComplete(l.slug)} />
+                  </li>
+                ))}
+              </ol>
+            </section>
+          )
+        })}
       </section>
 
       <SkyToday />

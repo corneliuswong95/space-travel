@@ -64,6 +64,36 @@
   color: var(--text-muted);
 }
 
+/* --- Chapters --- */
+.chapter {
+  margin-top: var(--space-8);
+}
+
+.chapterHead {
+  margin-bottom: var(--space-5);
+  padding-bottom: var(--space-3);
+  border-bottom: 1px solid var(--hairline);
+}
+
+.chapterKicker {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  color: var(--accent);
+}
+
+.chapterTitle {
+  margin-top: var(--space-2);
+  font-size: var(--text-2xl);
+}
+
+.chapterBlurb {
+  margin-top: var(--space-1);
+  color: var(--text-muted);
+  font-size: var(--text-base);
+}
+
 .cards {
   list-style: none;
   margin: var(--space-5) 0 0;
