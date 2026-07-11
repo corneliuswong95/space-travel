@@ -34,7 +34,7 @@ export function LessonPage() {
   if (!isAvailable(entry)) {
     return (
       <div className={`container ${styles.coming}`}>
-        <Link to="/" className={styles.back}>
+        <Link to="/lessons" className={styles.back}>
           ← All lessons
         </Link>
         <AtlasPlate
@@ -48,7 +48,7 @@ export function LessonPage() {
           This lesson is on the path but isn't written yet. Start with the lessons already
           available — this one will slot in here when it's ready.
         </p>
-        <Button to="/">Back to the path</Button>
+        <Button to="/lessons">Back to the path</Button>
       </div>
     )
   }
@@ -63,7 +63,7 @@ export function LessonPage() {
   return (
     <article className={styles.page}>
       <div className={`container ${styles.head}`}>
-        <Link to="/" className={styles.back}>
+        <Link to="/lessons" className={styles.back}>
           ← All lessons
         </Link>
         <AtlasPlate
@@ -129,7 +129,7 @@ export function LessonPage() {
 
         <nav className={styles.pageNav} aria-label="Lesson navigation">
           <div className={styles.navLeft}>
-            <Button to="/" variant="ghost">
+            <Button to="/lessons" variant="ghost">
               All lessons
             </Button>
             <Button to="/explore" variant="ghost">

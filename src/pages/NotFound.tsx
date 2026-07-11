@@ -12,7 +12,7 @@ export function NotFound() {
         subtitle="That page isn't in the atlas. It may have moved, or it may never have existed."
         meta="NO FIX"
       />
-      <Button to="/">Back to the lessons</Button>
+      <Button to="/lessons">Back to the lessons</Button>
     </div>
   )
 }

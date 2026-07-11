@@ -26,7 +26,7 @@ export function Explore() {
         Built from the same static data the lessons use, so it works offline. Pick a world in the
         rail or tap it in the scene; the camera eases in and its readout updates.
       </p>
-      <Button to="/">Go to the lessons</Button>
+      <Button to="/lessons">Go to the lessons</Button>
     </div>
   )
 }

@@ -6,7 +6,8 @@ import { Home } from '@/pages/Home'
 import { NotFound } from '@/pages/NotFound'
 
 // Code-split the heavier routes: LessonPage pulls in Recharts + MDX content, so keep it out
-// of the initial bundle. The catalog (Home) stays eager for a fast first paint.
+// of the initial bundle. Home (the gateway) stays eager for a fast first paint.
+const Lessons = lazy(() => import('@/pages/Lessons').then((m) => ({ default: m.Lessons })))
 const LessonPage = lazy(() =>
   import('@/pages/LessonPage').then((m) => ({ default: m.LessonPage })),
 )
@@ -20,6 +21,7 @@ export const router = createBrowserRouter([
     element: <RootLayout />,
     children: [
       { index: true, element: <Home /> },
+      { path: 'lessons', element: <Lessons /> },
       { path: 'lessons/:slug', element: <LessonPage /> },
       { path: 'explore', element: <Explore /> },
       { path: 'sky', element: <Sky /> },

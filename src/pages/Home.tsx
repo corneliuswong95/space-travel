@@ -3,46 +3,54 @@ import { Link } from 'react-router-dom'
 import { Button } from '@/components/ui/Button'
 import { OrbitDiagram } from '@/components/story/OrbitDiagram'
 import { SkyToday } from '@/components/nasa/SkyToday'
-import { lessons, chapters, isAvailable } from '@/lessons'
-import type { LessonEntry } from '@/lessons/types'
+import { lessons, isAvailable } from '@/lessons'
 import { useProgress } from '@/hooks/useProgress'
 import styles from './Home.module.css'
 
-function LessonCard({ lesson, done }: { lesson: LessonEntry; done: boolean }) {
-  const planned = lesson.status === 'planned'
-  const meta = planned ? 'Planned' : done ? '✓ Done' : `${lesson.estMinutes} min`
-
-  const inner = (
-    <>
-      <div className={styles.cardTop}>
-        <span className={styles.cardCat}>{lesson.catalog}</span>
-        <span className={`${styles.cardMeta} ${done ? styles.metaDone : ''}`.trim()}>{meta}</span>
-      </div>
-      <h3 className={styles.cardTitle}>{lesson.title}</h3>
-      <p className={styles.cardSummary}>{lesson.summary}</p>
-    </>
-  )
-
-  if (planned) {
-    return (
-      <div className={`${styles.card} ${styles.cardPlanned}`} aria-disabled="true">
-        {inner}
-      </div>
-    )
-  }
-
-  return (
-    <Link to={`/lessons/${lesson.slug}`} className={`${styles.card} ${done ? styles.cardDone : ''}`.trim()}>
-      {inner}
-    </Link>
-  )
+interface Gateway {
+  to: string
+  kicker: string
+  title: string
+  desc: string
+  meta: string
 }
 
 export function Home() {
   const { isComplete } = useProgress()
   const available = lessons.filter(isAvailable)
   const doneCount = available.filter((l) => isComplete(l.slug)).length
-  const next = available.find((l) => !isComplete(l.slug)) ?? available[0]
+  const started = doneCount > 0
+
+  const gateways: Gateway[] = [
+    {
+      to: '/lessons',
+      kicker: 'The path',
+      title: 'Lessons',
+      desc: 'A sequenced set of short lessons, each grounded in real numbers and ending with a check for understanding.',
+      meta: `${doneCount} / ${available.length} complete`,
+    },
+    {
+      to: '/explore',
+      kicker: 'Sandbox',
+      title: 'Explore in 3D',
+      desc: 'Orbit the solar system and fly to any world, with a live telemetry readout for each body.',
+      meta: 'Free roam',
+    },
+    {
+      to: '/sky',
+      kicker: 'Live data',
+      title: 'The sky today',
+      desc: 'NASA’s picture of the day, this week’s near-Earth asteroids, full-disk Earth, and space weather.',
+      meta: 'From NASA',
+    },
+    {
+      to: '/launches',
+      kicker: 'Mission log',
+      title: 'Launches & news',
+      desc: 'Upcoming rocket launches, what flew in the past week, and the latest headlines from spaceflight.',
+      meta: 'Updated hourly',
+    },
+  ]
 
   return (
     <>
@@ -56,9 +64,7 @@ export function Home() {
               every lesson grounded in real numbers and ending with a check for understanding.
             </p>
             <div className={styles.actions}>
-              <Button to={`/lessons/${next.slug}`}>
-                {doneCount > 0 ? 'Continue the path' : 'Start the path'}
-              </Button>
+              <Button to="/lessons">{started ? 'Continue the path' : 'Start the path'}</Button>
               <Button to="/explore" variant="ghost">
                 Explore in 3D
               </Button>
@@ -68,42 +74,27 @@ export function Home() {
         </div>
       </section>
 
-      <section className={`container ${styles.path}`} aria-labelledby="path-heading">
-        <div className={styles.pathHead}>
-          <h2 id="path-heading" className={styles.pathTitle}>
-            The path
-          </h2>
-          <span className={`${styles.pathProgress} mono`}>
-            {doneCount} / {available.length} complete
-          </span>
-        </div>
-
-        {chapters.map((ch) => {
-          const chapterLessons = lessons.filter((l) => l.chapter === ch.id)
-          if (chapterLessons.length === 0) return null
-          return (
-            <section
-              key={ch.id}
-              className={styles.chapter}
-              aria-labelledby={`chapter-${ch.id}`}
-            >
-              <header className={styles.chapterHead}>
-                <span className={styles.chapterKicker}>Chapter {ch.numeral}</span>
-                <h3 id={`chapter-${ch.id}`} className={styles.chapterTitle}>
-                  {ch.title}
-                </h3>
-                <p className={styles.chapterBlurb}>{ch.blurb}</p>
-              </header>
-              <ol className={styles.cards}>
-                {chapterLessons.map((l) => (
-                  <li key={l.slug}>
-                    <LessonCard lesson={l} done={isAvailable(l) && isComplete(l.slug)} />
-                  </li>
-                ))}
-              </ol>
-            </section>
-          )
-        })}
+      <section className={`container ${styles.gateway}`} aria-labelledby="gateway-heading">
+        <h2 id="gateway-heading" className="visually-hidden">
+          Where to go
+        </h2>
+        <ul className={styles.gwGrid}>
+          {gateways.map((g) => (
+            <li key={g.to}>
+              <Link to={g.to} className={styles.gwCard}>
+                <div className={styles.gwTop}>
+                  <span className={styles.gwKicker}>{g.kicker}</span>
+                  <span className={styles.gwMeta}>{g.meta}</span>
+                </div>
+                <h3 className={styles.gwTitle}>{g.title}</h3>
+                <p className={styles.gwDesc}>{g.desc}</p>
+                <span className={styles.gwArrow} aria-hidden="true">
+                  →
+                </span>
+              </Link>
+            </li>
+          ))}
+        </ul>
       </section>
 
       <SkyToday />

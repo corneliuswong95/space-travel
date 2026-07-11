@@ -73,7 +73,7 @@ export function Nav() {
           className={`${styles.links} ${open ? styles.linksOpen : ''}`.trim()}
           aria-label="Primary"
         >
-          <NavLink to="/" end className={navClass}>
+          <NavLink to="/lessons" className={navClass}>
             Lessons
           </NavLink>
           <NavLink to="/sky" className={navClass}>

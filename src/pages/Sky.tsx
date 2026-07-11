@@ -183,7 +183,7 @@ export function Sky() {
         <ImageSearch />
       </section>
 
-      <Button to="/" variant="ghost" className={styles.backBtn}>
+      <Button to="/lessons" variant="ghost" className={styles.backBtn}>
         Back to the lessons
       </Button>
 
