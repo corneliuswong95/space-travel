@@ -1,0 +1,319 @@
+.feed {
+  margin-top: var(--space-9);
+}
+
+.feedHead {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  padding-bottom: var(--space-3);
+  margin-bottom: var(--space-5);
+  border-bottom: 1px solid var(--hairline);
+}
+
+.feedTitle {
+  font-size: var(--text-2xl);
+}
+
+.feedSub {
+  color: var(--text-muted);
+  font-size: var(--text-sm);
+  max-width: 46ch;
+}
+
+/* --- Two-column layout: a main feed + a sticky glance rail (à la a homepage feed) --- */
+.layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.7fr) minmax(0, 1fr);
+  gap: var(--space-5);
+  align-items: start;
+}
+
+.main {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.rail {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  position: sticky;
+  top: var(--space-5);
+}
+
+/* --- Post card --- */
+.card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding: var(--space-5);
+  background: var(--surface);
+  border: 1px solid var(--hairline);
+  border-left: 3px solid var(--hairline-strong);
+  border-radius: var(--radius-lg);
+  text-decoration: none;
+  color: var(--text);
+  overflow: hidden;
+  transition:
+    transform var(--dur-fast) var(--ease-out),
+    border-color var(--dur-fast) var(--ease-out);
+}
+
+.card:hover {
+  transform: translateY(-2px);
+  border-color: var(--hairline-strong);
+}
+
+.card:focus-visible {
+  outline: none;
+  box-shadow: var(--focus-ring);
+}
+
+/* Tone: coloured left edge + source label, one per destination section. */
+.tonePath {
+  border-left-color: var(--amber);
+}
+.toneSky {
+  border-left-color: var(--slate);
+}
+.toneLaunch {
+  border-left-color: var(--rust);
+}
+.toneExplore {
+  border-left-color: color-mix(in srgb, var(--amber), var(--rust));
+}
+
+.cardHead {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-3);
+  margin-bottom: var(--space-3);
+}
+
+.source {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  color: var(--accent);
+}
+
+.tonePath .source {
+  color: var(--amber);
+}
+.toneSky .source {
+  color: color-mix(in srgb, var(--slate) 80%, var(--text));
+}
+.toneLaunch .source {
+  color: var(--rust);
+}
+.toneExplore .source {
+  color: color-mix(in srgb, var(--amber), var(--rust));
+}
+
+.meta {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--text-muted);
+  white-space: nowrap;
+}
+
+.title {
+  font-size: var(--text-lg);
+  line-height: 1.25;
+  color: var(--text);
+}
+
+.titleLg {
+  font-family: var(--font-display);
+  font-size: var(--text-xl);
+  line-height: 1.15;
+  color: var(--text);
+}
+
+/* The feature post (today's picture) gets a larger headline. */
+.feature .titleLg {
+  font-size: var(--text-2xl);
+}
+
+.body {
+  margin-top: var(--space-2);
+  color: var(--text-muted);
+  font-size: var(--text-sm);
+  line-height: 1.6;
+}
+
+.strong {
+  color: var(--text);
+  font-weight: 600;
+}
+
+.cta {
+  margin-top: auto;
+  padding-top: var(--space-4);
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  letter-spacing: 0.08em;
+  color: var(--text-muted);
+  transition:
+    color var(--dur-fast) var(--ease-out),
+    transform var(--dur-fast) var(--ease-out);
+}
+
+.card:hover .cta {
+  transform: translateX(3px);
+}
+.tonePath:hover .cta {
+  color: var(--amber);
+}
+.toneSky:hover .cta {
+  color: color-mix(in srgb, var(--slate) 80%, var(--text));
+}
+.toneLaunch:hover .cta {
+  color: var(--rust);
+}
+.toneExplore:hover .cta {
+  color: color-mix(in srgb, var(--amber), var(--rust));
+}
+
+/* --- Media --- */
+.media,
+.mediaShort {
+  display: block;
+  width: 100%;
+  margin: 0 0 var(--space-4);
+  border-radius: var(--radius);
+  overflow: hidden;
+  background: var(--surface-inset);
+}
+
+.media {
+  aspect-ratio: 16 / 9;
+}
+
+.mediaShort {
+  aspect-ratio: 2.4 / 1;
+}
+
+.mediaImg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.mediaFallback {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--surface-inset);
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+}
+
+/* --- Progress (path post) --- */
+.progress {
+  margin-top: var(--space-4);
+  height: 6px;
+  border-radius: var(--radius-pill);
+  background: var(--surface-inset);
+  overflow: hidden;
+}
+
+.progressBar {
+  height: 100%;
+  min-width: 2px;
+  border-radius: var(--radius-pill);
+  background: var(--amber);
+  transition: width var(--dur-slow) var(--ease-out);
+}
+
+.progressText {
+  margin-top: var(--space-2);
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--text-muted);
+}
+
+/* --- Moon widget --- */
+.moonRow {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+}
+
+.moonGlyph {
+  font-size: 2.4rem;
+  line-height: 1;
+}
+
+/* --- Explore art --- */
+.exploreArt {
+  margin-bottom: var(--space-4);
+  color: var(--slate);
+}
+
+.exploreSvg {
+  width: 100%;
+  height: auto;
+  max-height: 96px;
+}
+
+/* --- Skeletons --- */
+.skel {
+  background: linear-gradient(
+    90deg,
+    var(--surface-inset),
+    color-mix(in srgb, var(--slate) 16%, transparent),
+    var(--surface-inset)
+  );
+  background-size: 200% 100%;
+  animation: feed-pulse 1.4s ease-in-out infinite;
+}
+
+.skelLine {
+  display: block;
+  height: 0.9rem;
+  margin-top: var(--space-3);
+  border-radius: var(--radius-sm);
+}
+
+@keyframes feed-pulse {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+/* --- Responsive --- */
+@media (max-width: 900px) {
+  .layout {
+    grid-template-columns: 1fr;
+  }
+  .rail {
+    position: static;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .card,
+  .cta,
+  .card:hover .cta,
+  .progressBar {
+    transition: none;
+  }
+  .skel {
+    animation: none;
+  }
+}
