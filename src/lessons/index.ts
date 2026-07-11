@@ -375,7 +375,7 @@ export const lessons: LessonEntry[] = [
       { label: 'Orbit speed', value: '28,000', unit: 'km/h' },
       { label: 'Escape velocity', value: '11.2', unit: 'km/s' },
       { label: 'ISS altitude', value: '~400', unit: 'km' },
-      { label: 'Voyager 1', value: '24 billion', unit: 'km' },
+      { label: 'Voyager 1', value: '25 billion', unit: 'km' },
     ],
     status: 'available',
     Content: Content13,
@@ -468,7 +468,7 @@ export const lessons: LessonEntry[] = [
     ],
     estMinutes: 10,
     readouts: [
-      { label: 'Confirmed', value: '5,000+' },
+      { label: 'Confirmed', value: '6,000+' },
       { label: 'First (Sun-like)', value: '1995' },
       { label: 'Nearest', value: 'Proxima b', unit: '4.2 ly' },
       { label: 'Main method', value: 'transit' },

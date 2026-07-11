@@ -38,7 +38,7 @@ export const quiz: QuizQuestion[] = [
     ],
     answer: 2,
     explanation:
-      'During the eclipse, astronomers could see stars whose light grazed the Sun, and those stars appeared shifted — the Sun’s gravity had bent their light by exactly the amount Einstein predicted. This bending of light by gravity, called gravitational lensing, is now a working tool astronomers use to weigh galaxies and to see objects hidden behind them.',
+      'During the eclipse, astronomers could see stars whose light grazed the Sun, and those stars appeared shifted — the Sun’s gravity had bent their light by close to the amount Einstein predicted, far more than Newton’s gravity alone allowed. This bending of light by gravity, called gravitational lensing, is now a working tool astronomers use to weigh galaxies and to see objects hidden behind them.',
   },
   {
     id: 'speed-limit',
