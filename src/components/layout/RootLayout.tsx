@@ -29,6 +29,16 @@ export function RootLayout() {
           </p>
           <p className={styles.footNote}>Planet textures by Solar System Scope (CC BY 4.0).</p>
           <p className={`mono ${styles.footBy}`}>By Cornelius Wong</p>
+          <p className={styles.footSupport}>
+            <a
+              className={styles.supportLink}
+              href="https://buymeacoffee.com/buski"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Enjoying the tour? Buy me a coffee.
+            </a>
+          </p>
         </div>
       </footer>
       <Analytics />
